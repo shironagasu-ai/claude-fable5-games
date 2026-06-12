@@ -9,4 +9,13 @@
       'color:#5eead4;font-family:monospace'
     );
   }
+
+  if (stage >= 2) {
+    const intro = document.querySelector('.intro');
+    if (intro) intro.textContent = intro.textContent.replace('増やして', '殖やして');
+    console.log(
+      '%c[obs-log:002] つづけて。',
+      'color:#5eead4;font-family:monospace'
+    );
+  }
 })();
