@@ -9,6 +9,15 @@
       "icon": "⚡",
       "tags": ["カジュアル"],
       "path": "games/reflex-tap/"
+    },
+    {
+      "id": "breakout",
+      "order": 2,
+      "title": "ブロック崩し",
+      "description": "定番のブロック崩し。ドラッグでパドルを操作",
+      "icon": "🧱",
+      "tags": ["アクション"],
+      "path": "games/breakout/"
     }
   ]
 }
