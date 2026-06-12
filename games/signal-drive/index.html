@@ -70,6 +70,29 @@
     </div>
   </div>
   <script src="../../shared/progress.js"></script>
+  <script>
+    // モバイルでも読み込み失敗の原因が分かるように画面に表示する
+    (() => {
+      const show = (text) => {
+        const m = document.getElementById('msg');
+        if (m) m.innerHTML = '⚠️ ' + text;
+        document.getElementById('overlay').hidden = false;
+      };
+      addEventListener('error', (e) => show('エラー: ' + (e.message || '読み込み失敗')));
+      addEventListener('unhandledrejection', (e) => show('エラー: ' + e.reason));
+      setTimeout(async () => {
+        if (window.__sdReady) return;
+        let detail = '';
+        try {
+          const r = await fetch('../../lib/three/three.module.min.js', { method: 'HEAD' });
+          detail = `three.js: HTTP ${r.status}`;
+        } catch (err) {
+          detail = 'three.js: ' + err;
+        }
+        show('3Dエンジンを読み込めませんでした<br>' + detail);
+      }, 4000);
+    })();
+  </script>
   <script type="module" src="game.js"></script>
 </body>
 </html>
