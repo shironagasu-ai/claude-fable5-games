@@ -27,6 +27,15 @@
       "icon": "🐍",
       "tags": ["アクション"],
       "path": "games/snake/"
+    },
+    {
+      "id": "memory",
+      "order": 4,
+      "title": "神経衰弱",
+      "description": "めくって揃える記憶ゲーム。全ペアを見つけよう",
+      "icon": "🃏",
+      "tags": ["思考"],
+      "path": "games/memory/"
     }
   ]
 }
