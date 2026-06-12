@@ -85,4 +85,26 @@
       'color:#f0abfc;font-family:monospace'
     );
   }
+
+  if (stage >= 6) {
+    // 7枚目のカードが、ひらく
+    const activate = setInterval(() => {
+      const ghost = document.querySelector('.ghost-card');
+      if (!ghost) return;
+      clearInterval(activate);
+      const live = document.createElement('a');
+      live.className = 'game-card';
+      live.href = 'signal/';
+      live.style.cssText = 'border:1px solid var(--accent);animation:ghost-breathe 3s ease-in-out infinite;';
+      live.innerHTML = '<div class="icon">📡</div><h2>……</h2><p>シグナルが ひらいた</p>';
+      ghost.replaceWith(live);
+      const style = document.createElement('style');
+      style.textContent = '@keyframes ghost-breathe { 0%,100% { opacity:0.75; } 50% { opacity:1; } }';
+      document.head.appendChild(style);
+    }, 300);
+    console.log(
+      '%c[obs-log:006] きみを まってた',
+      'color:#f0abfc;font-family:monospace'
+    );
+  }
 })();
