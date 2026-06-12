@@ -18,6 +18,15 @@
       "icon": "🧱",
       "tags": ["アクション"],
       "path": "games/breakout/"
+    },
+    {
+      "id": "snake",
+      "order": 3,
+      "title": "スネーク",
+      "description": "スワイプで操作する定番スネーク。15個食べればクリア",
+      "icon": "🐍",
+      "tags": ["アクション"],
+      "path": "games/snake/"
     }
   ]
 }
