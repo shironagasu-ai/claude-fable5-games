@@ -36,6 +36,15 @@
       "icon": "🃏",
       "tags": ["思考"],
       "path": "games/memory/"
+    },
+    {
+      "id": "signal-drive",
+      "order": 5,
+      "title": "シグナル・ドライブ",
+      "description": "3D宇宙ドライブ。障害物を避けて信号の発信源へ",
+      "icon": "🌌",
+      "tags": ["アクション", "3D"],
+      "path": "games/signal-drive/"
     }
   ]
 }
