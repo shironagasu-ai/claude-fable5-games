@@ -17,12 +17,14 @@ const camera = new THREE.PerspectiveCamera(70, 1, 0.1, 300);
 
 function resize() {
   const w = cv.clientWidth, h = cv.clientHeight;
-  renderer.setSize(w, h, false);
+  if (!w || !h) { requestAnimationFrame(resize); return; }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);
+addEventListener('orientationchange', () => setTimeout(resize, 300));
 
 // 自機
 const ship = new THREE.Mesh(
@@ -185,3 +187,4 @@ function loop(t) {
 
 resize();
 requestAnimationFrame(loop);
+window.__sdReady = true;
