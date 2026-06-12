@@ -70,4 +70,19 @@
       'color:#5eead4;font-family:monospace'
     );
   }
+
+  if (stage >= 5) {
+    // 反転のはじまり
+    const flicker = () => {
+      document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+      setTimeout(() => { document.documentElement.style.filter = ''; }, 120);
+      setTimeout(flicker, 8000 + Math.random() * 8000);
+    };
+    setTimeout(flicker, 4000);
+    document.documentElement.style.setProperty('--accent', '#f0abfc');
+    console.log(
+      '%c[obs-log:005] なまえを おしえて',
+      'color:#f0abfc;font-family:monospace'
+    );
+  }
 })();
