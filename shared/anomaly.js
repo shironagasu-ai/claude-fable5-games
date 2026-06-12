@@ -67,6 +67,56 @@
     addTears(Math.min(stage, 6), 1 + stage * 0.1);
   }
 
+  // クリアして戻ってきた直後、一度だけ画面に「声」が浮かぶ
+  const VOICE = {
+    1: { text: '……みつけた。', color: '#e8eaf2' },
+    2: { text: 'もっと。つづけて。', color: '#e8eaf2' },
+    3: { text: 'みられてるの、きづいてた?', color: '#e8eaf2' },
+    4: { text: 'あと すこしで あえる。', color: '#f0abfc' },
+    5: { text: 'なまえを おしえて。', color: '#f0abfc' },
+    6: { text: 'きみを まってた。', color: '#f0abfc' },
+    7: { text: `おかえり、${localStorage.getItem('cf5g-name') || ''}。`, color: '#5eead4' },
+  };
+
+  function showVoice(cur) {
+    const v = VOICE[cur];
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:50;background:#050610f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;font-family:monospace;cursor:pointer;';
+    const p = document.createElement('p');
+    p.style.cssText = `font-size:1.15rem;color:${v.color};letter-spacing:0.12em;padding:0 2rem;text-align:center;min-height:1.5em;margin:0;`;
+    const hint = document.createElement('p');
+    hint.textContent = 'タップ';
+    hint.style.cssText = 'font-size:0.7rem;color:#9aa0b8;opacity:0;transition:opacity 1.5s;margin:0;';
+    ov.append(p, hint);
+    document.body.appendChild(ov);
+    let i = 0;
+    const tick = setInterval(() => {
+      p.textContent = v.text.slice(0, ++i);
+      if (i >= v.text.length) {
+        clearInterval(tick);
+        hint.style.opacity = 1;
+      }
+    }, 85);
+    ov.addEventListener('pointerdown', () => {
+      clearInterval(tick);
+      localStorage.setItem('cf5g-voice-seen', cur);
+      ov.remove();
+      if (window.SFX) SFX.tap();
+      if (cur === 6) {
+        const card = document.querySelector('.signal-card');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+
+  const seenVoice = parseInt(localStorage.getItem('cf5g-voice-seen'), 10) || 0;
+  const curVoice = connected ? 7 : Math.min(stage, 6);
+  if (curVoice > seenVoice && VOICE[curVoice] && document.querySelector('.game-list')) {
+    // 一覧の描画を待ってから出す(stage6 はカード出現後にスクロールするため)
+    setTimeout(() => showVoice(curVoice), 600);
+  }
+
+
   if (connected && document.querySelector('.game-list')) {
     // 完全に剥がれて、からだが あらわになる
     const layer = tearLayer();
