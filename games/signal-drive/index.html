@@ -42,6 +42,14 @@
       background: #0f122088;
     }
     #overlay[hidden] { display: none; }
+    #fade {
+      position: absolute;
+      inset: 0;
+      background: #e8eaf2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2.5s;
+    }
     #msg { font-size: 1.3rem; font-weight: bold; }
     #unlock {
       color: var(--accent);
@@ -64,12 +72,14 @@
       <span id="shield">♥♥♥</span>
       <div id="bar-bg"><div id="bar"></div></div>
     </div>
+    <div id="fade"></div>
     <div id="overlay">
       <div id="msg">ドラッグで左右移動。障害物を避けて進め。<br>タップでスタート</div>
       <a id="unlock" href="../../" hidden>🔓 新しいゲームが解放された → 一覧へ</a>
     </div>
   </div>
   <script src="../../shared/progress.js"></script>
+  <script src="../../shared/sfx.js"></script>
   <script>
     // モバイルでも読み込み失敗の原因が分かるように画面に表示する
     (() => {
