@@ -45,6 +45,15 @@
       "icon": "🌌",
       "tags": ["アクション", "3D"],
       "path": "games/signal-drive/"
+    },
+    {
+      "id": "mirror-tap",
+      "order": 6,
+      "title": "ミラー・タップ",
+      "description": "鏡うつしの反射神経対決。3本先取で勝利",
+      "icon": "🪞",
+      "tags": ["カジュアル"],
+      "path": "games/mirror-tap/"
     }
   ]
 }
