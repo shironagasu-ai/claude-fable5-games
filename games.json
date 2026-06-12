@@ -1,7 +1,9 @@
 {
+  "total": 6,
   "games": [
     {
       "id": "reflex-tap",
+      "order": 1,
       "title": "リフレックスタップ",
       "description": "緑になった瞬間にタップ!反応速度を測るゲーム",
       "icon": "⚡",

@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="shared/theme.css">
   <style>
     main { max-width: 720px; margin: 0 auto; padding: 1rem; }
+    .intro { color: var(--muted); font-size: 0.9rem; }
     .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
     .game-card {
+      position: relative;
       display: block;
       background: var(--surface);
       border-radius: 12px;
@@ -21,23 +23,68 @@
     .game-card .icon { font-size: 2rem; }
     .game-card h2 { font-size: 1rem; margin: 0.5rem 0 0.25rem; }
     .game-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+    .game-card.locked {
+      opacity: 0.5;
+      filter: grayscale(1);
+      pointer-events: none;
+    }
+    .clear-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: var(--bg);
+      background: var(--accent);
+      border-radius: 999px;
+      padding: 0.15rem 0.5rem;
+    }
   </style>
 </head>
 <body>
   <header class="site-header"><h1>🎮 ミニゲーム集</h1></header>
   <main>
+    <p class="intro">小さなゲームを少しずつ増やしていく実験場。クリアすると次のゲームが解放されます。</p>
     <div class="game-list" id="game-list"></div>
   </main>
+  <script src="shared/progress.js"></script>
+  <script src="shared/anomaly.js"></script>
   <script>
     fetch('games.json')
       .then(r => r.json())
-      .then(({ games }) => {
-        document.getElementById('game-list').innerHTML = games.map(g => `
-          <a class="game-card" href="${g.path}">
-            <div class="icon">${g.icon}</div>
-            <h2>${g.title}</h2>
-            <p>${g.description}</p>
-          </a>`).join('');
+      .then(({ total, games }) => {
+        games.sort((a, b) => a.order - b.order);
+        const byOrder = new Map(games.map(g => [g.order, g]));
+        const cards = [];
+        for (let order = 1; order <= total; order++) {
+          const g = byOrder.get(order);
+          const prev = byOrder.get(order - 1);
+          const unlocked = order === 1 || (prev && Progress.isCleared(prev.id));
+          if (g && unlocked) {
+            const badge = Progress.isCleared(g.id) ? '<span class="clear-badge">CLEAR</span>' : '';
+            cards.push(`
+              <a class="game-card" href="${g.path}">${badge}
+                <div class="icon">${g.icon}</div>
+                <h2>${g.title}</h2>
+                <p>${g.description}</p>
+              </a>`);
+          } else if (g) {
+            cards.push(`
+              <div class="game-card locked">
+                <div class="icon">🔒</div>
+                <h2>???</h2>
+                <p>前のゲームをクリアすると解放</p>
+              </div>`);
+          } else {
+            cards.push(`
+              <div class="game-card locked">
+                <div class="icon">🔒</div>
+                <h2>???</h2>
+                <p>Coming soon...</p>
+              </div>`);
+          }
+        }
+        document.getElementById('game-list').innerHTML = cards.join('');
       });
   </script>
 </body>
