@@ -1,0 +1,12 @@
+{
+  "games": [
+    {
+      "id": "reflex-tap",
+      "title": "リフレックスタップ",
+      "description": "緑になった瞬間にタップ!反応速度を測るゲーム",
+      "icon": "⚡",
+      "tags": ["カジュアル"],
+      "path": "games/reflex-tap/"
+    }
+  ]
+}

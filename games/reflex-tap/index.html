@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>リフレックスタップ</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+    #stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      text-align: center;
+      padding: 1rem;
+    }
+    #stage.waiting { background: #b91c1c; }
+    #stage.ready { background: #15803d; }
+    #message { font-size: 1.5rem; font-weight: bold; }
+    #result { font-size: 1rem; color: var(--muted); }
+    #stage.waiting #result, #stage.ready #result { color: #fff8; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="back-link" href="../../">← 一覧へ</a>
+    <h1>⚡ リフレックスタップ</h1>
+  </header>
+  <div id="stage">
+    <div id="message">タップしてスタート</div>
+    <div id="result"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
