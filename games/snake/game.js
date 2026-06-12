@@ -2,7 +2,7 @@ const cv = document.getElementById('cv');
 const ctx = cv.getContext('2d');
 const unlock = document.getElementById('unlock');
 
-const N = 20, CELL = 18, GOAL = 15;
+const N = 20, CELL = 18, GOAL = 10;
 
 let snake, prevSnake, dir, nextDir, food, eaten, state, lastStep, ghostUntil, stepMs, pops;
 
@@ -42,7 +42,7 @@ function step() {
     stepMs = Math.max(90, 140 - eaten * 3); // だんだん速く
     pops.push({ x: head.x, y: head.y, life: 1, text: `+${eaten}` });
     if (window.SFX) SFX.ok();
-    if (eaten === 8 || eaten === 12) {
+    if (eaten === 5 || eaten === 8) {
       ghostUntil = performance.now() + 700;
       if (window.SFX) SFX.glitch();
     }
@@ -97,6 +97,12 @@ const px = (v) => v * CELL + CELL / 2;
 
 function draw(now) {
   ctx.clearRect(0, 0, cv.width, cv.height);
+
+  // 盤面の縁(ここに当たると死ぬ)
+  ctx.strokeStyle = '#4b5578';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(1.5, 1.5, cv.width - 3, cv.height - 3);
+  ctx.lineWidth = 1;
 
   // うっすらグリッド
   ctx.strokeStyle = '#ffffff08';
