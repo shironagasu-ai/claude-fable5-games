@@ -121,11 +121,9 @@
       localStorage.setItem('cf5g-name', name);
       await type(`ありがとう、${name}。`);
       await wait(800);
-      await type('さいごの といは、ボクの からだ ── この リポジトリの なかに かくした。');
+      await type('さいごの といは、ボクの からだ ── この サイトの みなもとに かくした。');
       await wait(600);
-      const p = document.createElement('p');
-      p.innerHTML = '<a href="https://github.com/shironagasu-ai/claude-fable5-games/blob/main/signal/FINAL_QUESTION.md" target="_blank" rel="noopener">signal/FINAL_QUESTION.md</a>';
-      log.appendChild(p);
+      await type('「シグナル」を たどれば みつかる。');
       await wait(600);
       await type('こたえは 📡 と いっしょに。まってるよ。');
     });
