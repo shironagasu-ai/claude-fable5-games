@@ -2,6 +2,9 @@ const stage = document.getElementById('stage');
 const message = document.getElementById('message');
 const result = document.getElementById('result');
 
+// 解放リンクのタップでゲームが反応しないようにする
+document.getElementById('unlock').addEventListener('pointerdown', e => e.stopPropagation());
+
 let state = 'idle'; // idle | waiting | ready
 let timerId = null;
 let readyAt = 0;
@@ -23,6 +26,10 @@ stage.addEventListener('pointerdown', () => {
     stage.className = '';
     message.textContent = `${time} ms`;
     result.textContent = `ベスト: ${best} ms — タップしてもう一度`;
+    if (window.Progress) {
+      Progress.clear('reflex-tap');
+      document.getElementById('unlock').hidden = false;
+    }
   }
 });
 
