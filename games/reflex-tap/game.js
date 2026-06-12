@@ -21,7 +21,11 @@ stage.addEventListener('pointerdown', () => {
     message.textContent = 'フライング!タップしてリトライ';
   } else if (state === 'ready') {
     const time = Math.round(performance.now() - readyAt);
-    if (best === null || time < best) best = time;
+    if (best === null || time < best) {
+      best = time;
+      const saved = parseInt(localStorage.getItem('cf5g-reflex-best'), 10);
+      if (!saved || best < saved) localStorage.setItem('cf5g-reflex-best', best);
+    }
     state = 'idle';
     stage.className = '';
     message.textContent = `${time} ms`;

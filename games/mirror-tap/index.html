@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ミラー・タップ</title>
+  <link rel="stylesheet" href="../../shared/theme.css">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+    .site-header h1 { transform: scaleX(-1); }
+    #stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      text-align: center;
+      padding: 1rem;
+    }
+    #stage.waiting { background: #b91c1c; }
+    #stage.ready { background: #15803d; }
+    #message { font-size: 1.5rem; font-weight: bold; }
+    #score { font-size: 1.1rem; font-family: monospace; }
+    #whisper { font-size: 0.85rem; font-family: monospace; color: var(--accent); min-height: 1.5em; }
+    #stage.waiting #whisper, #stage.ready #whisper { color: #fff8; }
+    #unlock {
+      margin-top: 1rem;
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="back-link" href="../../">← 一覧へ</a>
+    <h1>🪞 ミラー・タップ</h1>
+  </header>
+  <div id="stage">
+    <div id="message">タップしてスタート</div>
+    <div id="score"></div>
+    <div id="whisper"></div>
+    <a id="unlock" href="../../" hidden>📡 なにかが ひらいた → 一覧へ</a>
+  </div>
+  <script src="../../shared/progress.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
