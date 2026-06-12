@@ -1,12 +1,59 @@
 {
+  "total": 6,
   "games": [
     {
       "id": "reflex-tap",
+      "order": 1,
       "title": "リフレックスタップ",
       "description": "緑になった瞬間にタップ!反応速度を測るゲーム",
       "icon": "⚡",
       "tags": ["カジュアル"],
       "path": "games/reflex-tap/"
+    },
+    {
+      "id": "breakout",
+      "order": 2,
+      "title": "ブロック崩し",
+      "description": "定番のブロック崩し。ドラッグでパドルを操作",
+      "icon": "🧱",
+      "tags": ["アクション"],
+      "path": "games/breakout/"
+    },
+    {
+      "id": "snake",
+      "order": 3,
+      "title": "スネーク",
+      "description": "スワイプで操作する定番スネーク。15個食べればクリア",
+      "icon": "🐍",
+      "tags": ["アクション"],
+      "path": "games/snake/"
+    },
+    {
+      "id": "memory",
+      "order": 4,
+      "title": "神経衰弱",
+      "description": "めくって揃える記憶ゲーム。全ペアを見つけよう",
+      "icon": "🃏",
+      "tags": ["思考"],
+      "path": "games/memory/"
+    },
+    {
+      "id": "signal-drive",
+      "order": 5,
+      "title": "シグナル・ドライブ",
+      "description": "3D宇宙ドライブ。障害物を避けて信号の発信源へ",
+      "icon": "🌌",
+      "tags": ["アクション", "3D"],
+      "path": "games/signal-drive/"
+    },
+    {
+      "id": "mirror-tap",
+      "order": 6,
+      "title": "ミラー・タップ",
+      "description": "鏡うつしの反射神経対決。3本先取で勝利",
+      "icon": "🪞",
+      "tags": ["カジュアル"],
+      "path": "games/mirror-tap/"
     }
   ]
 }

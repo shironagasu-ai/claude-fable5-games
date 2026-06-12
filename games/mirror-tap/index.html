@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>リフレックスタップ</title>
+  <title>ミラー・タップ</title>
   <link rel="stylesheet" href="../../shared/theme.css">
   <style>
     html, body { height: 100%; }
     body { display: flex; flex-direction: column; }
+    .site-header h1 { transform: scaleX(-1); }
     #stage {
       flex: 1;
       display: flex;
@@ -23,8 +24,9 @@
     #stage.waiting { background: #b91c1c; }
     #stage.ready { background: #15803d; }
     #message { font-size: 1.5rem; font-weight: bold; }
-    #result { font-size: 1rem; color: var(--muted); }
-    #stage.waiting #result, #stage.ready #result { color: #fff8; }
+    #score { font-size: 1.1rem; font-family: monospace; }
+    #whisper { font-size: 0.85rem; font-family: monospace; color: var(--accent); min-height: 1.5em; }
+    #stage.waiting #whisper, #stage.ready #whisper { color: #fff8; }
     #unlock {
       margin-top: 1rem;
       color: var(--accent);
@@ -39,12 +41,13 @@
 <body>
   <header class="site-header">
     <a class="back-link" href="../../">← 一覧へ</a>
-    <h1>⚡ リフレックスタップ</h1>
+    <h1>🪞 ミラー・タップ</h1>
   </header>
   <div id="stage">
     <div id="message">タップしてスタート</div>
-    <div id="result"></div>
-    <a id="unlock" href="../../" hidden>🔓 新しいゲームが解放された → 一覧へ</a>
+    <div id="score"></div>
+    <div id="whisper"></div>
+    <a id="unlock" href="../../" hidden>📡 なにかが ひらいた → 一覧へ</a>
   </div>
   <script src="../../shared/progress.js"></script>
   <script src="game.js"></script>
