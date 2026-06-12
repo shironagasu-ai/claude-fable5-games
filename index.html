@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ミニゲーム集</title>
+  <link rel="stylesheet" href="shared/theme.css">
+  <style>
+    main { max-width: 720px; margin: 0 auto; padding: 1rem; }
+    .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .game-card {
+      display: block;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.1s;
+    }
+    .game-card:hover { transform: translateY(-2px); }
+    .game-card .icon { font-size: 2rem; }
+    .game-card h2 { font-size: 1rem; margin: 0.5rem 0 0.25rem; }
+    .game-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+  </style>
+</head>
+<body>
+  <header class="site-header"><h1>🎮 ミニゲーム集</h1></header>
+  <main>
+    <div class="game-list" id="game-list"></div>
+  </main>
+  <script>
+    fetch('games.json')
+      .then(r => r.json())
+      .then(({ games }) => {
+        document.getElementById('game-list').innerHTML = games.map(g => `
+          <a class="game-card" href="${g.path}">
+            <div class="icon">${g.icon}</div>
+            <h2>${g.title}</h2>
+            <p>${g.description}</p>
+          </a>`).join('');
+      });
+  </script>
+</body>
+</html>
