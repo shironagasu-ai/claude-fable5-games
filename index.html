@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ミニゲーム集</title>
+  <meta property="og:title" content="ミニゲーム集">
+  <meta property="og:description" content="小さなゲームを少しずつ増やしていく実験場。クリアすると次のゲームが解放されます。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shironagasu-ai.github.io/claude-fable5-games/">
+  <meta property="og:image" content="https://shironagasu-ai.github.io/claude-fable5-games/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="shared/theme.css">
   <style>
     main { max-width: 720px; margin: 0 auto; padding: 1rem; }
@@ -52,6 +58,7 @@
     <div class="game-list" id="game-list"></div>
   </main>
   <script src="shared/progress.js"></script>
+  <script src="shared/sfx.js"></script>
   <script src="shared/anomaly.js"></script>
   <script>
     fetch('games.json')
