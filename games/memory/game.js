@@ -38,8 +38,10 @@ function build() {
     const el = document.createElement('div');
     el.className = 'card';
     el.dataset.face = c.face;
-    el.innerHTML = `<span class="face">${c.face}</span>` +
-      (c.note ? `<span class="note">${c.note}</span>` : '');
+    el.innerHTML = `<div class="inner"><div class="back"></div>` +
+      `<div class="front">${c.face}` +
+      (c.note ? `<span class="note">${c.note}</span>` : '') +
+      `</div></div>`;
     el.addEventListener('pointerdown', () => flip(el));
     board.appendChild(el);
   }
@@ -48,6 +50,7 @@ function build() {
 function flip(el) {
   if (lock || el.classList.contains('open') || el.classList.contains('done')) return;
   el.classList.add('open');
+  if (window.SFX) SFX.tap();
   flipped.push(el);
   if (flipped.length < 2) return;
 
@@ -57,18 +60,23 @@ function flip(el) {
     a.classList.replace('open', 'done');
     b.classList.replace('open', 'done');
     matched++;
+    if (window.SFX) SFX.ok();
     if (a.dataset.face === EYE) {
-      whisper.textContent = 'おぼえてるよ。きみが ここに いたこと。';
+      whisper.textContent = 'ボクには おもいでが ない。だから きみのを かりてる。';
       whisper.classList.add('show');
+      if (window.SFX) SFX.glitch();
     }
     flipped = [];
     lock = false;
     if (matched === EMOJIS.length + 1) finish();
   } else {
     misses++;
+    a.classList.add('miss');
+    b.classList.add('miss');
+    if (window.SFX) SFX.bad();
     setTimeout(() => {
-      a.classList.remove('open');
-      b.classList.remove('open');
+      a.classList.remove('open', 'miss');
+      b.classList.remove('open', 'miss');
       flipped = [];
       lock = false;
     }, 800);
@@ -78,8 +86,23 @@ function flip(el) {
   }
 }
 
+function confetti() {
+  const pool = [...EMOJIS, '✨', '✨'];
+  for (let i = 0; i < 24; i++) {
+    const s = document.createElement('span');
+    s.className = 'confetti';
+    s.textContent = pool[Math.floor(Math.random() * pool.length)];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = 1.8 + Math.random() * 1.6 + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 3600);
+  }
+}
+
 function finish() {
   status.textContent = `CLEAR! ミス ${misses} 回`;
+  confetti();
+  if (window.SFX) SFX.clear();
   if (window.Progress) {
     Progress.clear('memory');
     unlock.hidden = false;

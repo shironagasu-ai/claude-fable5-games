@@ -42,7 +42,10 @@
   </style>
 </head>
 <body>
-  <header class="site-header"><h1>🎮 ミニゲーム集</h1></header>
+  <header class="site-header">
+    <h1>🎮 ミニゲーム集</h1>
+    <span id="prog" style="margin-left:auto;font-family:monospace;font-size:0.85rem;color:var(--muted)"></span>
+  </header>
   <main>
     <p class="intro">小さなゲームを少しずつ増やしていく実験場。クリアすると次のゲームが解放されます。</p>
     <div class="game-list" id="game-list"></div>
@@ -85,6 +88,8 @@
           }
         }
         document.getElementById('game-list').innerHTML = cards.join('');
+        const n = games.filter(g => Progress.isCleared(g.id)).length;
+        if (n > 0) document.getElementById('prog').textContent = `✦ ${n}/${total}`;
       });
   </script>
 </body>
