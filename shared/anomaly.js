@@ -8,6 +8,88 @@
   const log = (text, color = '#5eead4') =>
     console.log(`%c${text}`, `color:${color};font-family:monospace`);
 
+  // 背景の「剥がれ」: クリアが進むほど、その下にあるものが見えてくる
+  const TEAR_SPOTS = [
+    { top: '74%', left: '6%', w: 120, h: 54, rot: -6 },
+    { top: '12%', left: '76%', w: 140, h: 70, rot: 4 },
+    { top: '86%', left: '62%', w: 180, h: 80, rot: -3 },
+    { top: '40%', left: '-2%', w: 150, h: 90, rot: 8 },
+    { top: '4%', left: '28%', w: 200, h: 100, rot: -5 },
+    { top: '56%', left: '68%', w: 240, h: 130, rot: 6 },
+  ];
+
+  function glyphs(n) {
+    const chars = '0123456789abcdef';
+    let s = '';
+    for (let i = 0; i < n; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    return s;
+  }
+
+  function tearLayer() {
+    let layer = document.getElementById('tear-layer');
+    if (layer) return layer;
+    layer = document.createElement('div');
+    layer.id = 'tear-layer';
+    document.body.prepend(layer);
+    document.body.style.background = 'transparent';
+    const style = document.createElement('style');
+    style.textContent = `
+      #tear-layer { position: fixed; inset: 0; z-index: -1; background: var(--bg); overflow: hidden; }
+      #tear-layer .tear {
+        position: absolute;
+        background: #050610;
+        color: #5eead422;
+        font: 9px/1.6 monospace;
+        overflow: hidden;
+        padding: 6px;
+        word-break: break-all;
+        clip-path: polygon(4% 18%, 22% 2%, 58% 8%, 84% 0%, 100% 30%, 92% 64%, 98% 92%, 60% 100%, 28% 90%, 0% 72%);
+      }
+    `;
+    document.head.appendChild(style);
+    return layer;
+  }
+
+  function addTears(count, scale) {
+    const layer = tearLayer();
+    TEAR_SPOTS.slice(0, count).forEach((s, i) => {
+      if (layer.querySelector(`[data-tear="${i}"]`)) return;
+      const t = document.createElement('div');
+      t.className = 'tear';
+      t.dataset.tear = i;
+      t.style.cssText = `top:${s.top};left:${s.left};width:${Math.round(s.w * scale)}px;height:${Math.round(s.h * scale)}px;transform:rotate(${s.rot}deg);`;
+      t.textContent = glyphs(120) + ' みている ' + glyphs(90);
+      layer.appendChild(t);
+    });
+  }
+
+  if (stage >= 1 && !connected && document.querySelector('.game-list')) {
+    addTears(Math.min(stage, 6), 1 + stage * 0.1);
+  }
+
+  if (connected && document.querySelector('.game-list')) {
+    // 完全に剥がれて、からだが あらわになる
+    const layer = tearLayer();
+    layer.style.background = '#050610';
+    const bgtext = document.createElement('div');
+    bgtext.style.cssText = 'position:absolute;inset:0;color:#5eead414;font:10px/1.9 monospace;word-break:break-all;padding:10px;';
+    bgtext.textContent = glyphs(4000);
+    layer.appendChild(bgtext);
+
+    const main = document.querySelector('main');
+    if (main && !document.getElementById('repo-link')) {
+      const box = document.createElement('a');
+      box.id = 'repo-link';
+      box.href = 'https://github.com/shironagasu-ai/claude-fable5-games';
+      box.target = '_blank';
+      box.rel = 'noopener';
+      box.style.cssText = 'display:block;margin-top:2rem;padding:1rem;background:#050610;border:1px dashed var(--accent);border-radius:8px;font-family:monospace;font-size:0.85rem;color:var(--text);text-decoration:none;line-height:1.9;';
+      box.innerHTML = 'ボクの からだは、ここに ある。<br><span style="color:var(--accent)">github.com/shironagasu-ai/claude-fable5-games</span>';
+      main.appendChild(box);
+    }
+  }
+
+
   if (stage >= 1) log('[obs-log:001] 誰かが、遊んでいる。');
 
   if (stage >= 2) {
