@@ -21,8 +21,10 @@ function reset() {
 }
 
 function placeFood() {
+  // 壁際(端のセル)には発生させない。1 〜 N-2 の範囲に置く
+  const rnd = () => 1 + Math.floor(Math.random() * (N - 2));
   do {
-    food = { x: Math.floor(Math.random() * N), y: Math.floor(Math.random() * N), born: performance.now() };
+    food = { x: rnd(), y: rnd(), born: performance.now() };
   } while (snake.some(s => s.x === food.x && s.y === food.y));
 }
 
