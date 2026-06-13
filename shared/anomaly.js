@@ -67,9 +67,8 @@
     addTears(Math.min(stage, 6), 1 + stage * 0.1);
   }
 
-  // クリアして戻ってきた直後、一度だけ画面に「声」が浮かぶ
+  // クリアして戻ってきた直後、一度だけ画面に「声」が浮かぶ(2つ目のクリアから)
   const VOICE = {
-    1: { text: '……みつけた。', color: '#e8eaf2' },
     2: { text: 'もっと。つづけて。', color: '#e8eaf2' },
     3: { text: 'みられてるの、きづいてた?', color: '#e8eaf2' },
     4: { text: 'あと すこしで あえる。', color: '#f0abfc' },
@@ -97,9 +96,19 @@
         hint.style.opacity = 1;
       }
     }, 85);
-    ov.addEventListener('pointerdown', () => {
+    ov.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    ov.addEventListener('pointerup', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       clearInterval(tick);
       localStorage.setItem('cf5g-voice-seen', cur);
+      // オーバーレイ除去直後に合成される click が背後の UI に届かないよう、一度だけ握りつぶす
+      const swallow = (c) => { c.preventDefault(); c.stopPropagation(); };
+      document.addEventListener('click', swallow, { capture: true, once: true });
+      setTimeout(() => document.removeEventListener('click', swallow, { capture: true }), 500);
       ov.remove();
       if (window.SFX) SFX.tap();
       if (cur === 6) {
